@@ -5,50 +5,21 @@ node_js:
   - "6"
   - "12"
 
-stages:
-  - build
-  - test
-
 before_install: skip
-install: skip
-
-env:
-  - CACHE_NAME=FOOBAR
 
 cache:
   directories:
     - target
     - node_modules
 
-jobs:
+install:
+  - 'if [ "${TRAVIS_NODE_VERSION}" = "12" ] ; then npm install ; fi ; nvm use "${TRAVIS_NODE_VERSION}";'
+
+script:
+  - yarn test
+
+matrix:
+  fast_finish: true
   include:
-    - stage: build
-      env:
-        - CACHE_NAME=FOOBAR
-      node_js:
-        - "12"
-      before_install: skip
-      install:
-        - echo "target dir content:"
-        - ls -l target
-        - yarn install
-      before_script: skip
-      script:
-        - yarn build
-        - echo "target dir content:"
-        - ls -l target
-
-    - stage: test
-      env:
-        - CACHE_NAME=FOOBAR
-      node_js:
-        - "6"
-        - "12"
-      before_install: skip
-      install:
-        - echo "target dir content:"
-        - ls -l target
-
-      before_script: skip
-      script:
-        - yarn test
+    - node_js: "6"
+    - node_js: "12"

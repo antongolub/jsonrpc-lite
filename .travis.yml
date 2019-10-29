@@ -1,10 +1,49 @@
 language: node_js
-node_js:
-  - "8"
-  - "10"
-  - "12"
-  - "13"
 sudo: false
+
+install: skip
+before_install: skip
+before_script: skip
+script: skip
+
+env:
+  - CACHE_NAME=${TRAVIS_OS_NAME}-${CC}-ALL_IN_ONE
+  - CASHER_DIR=${TRAVIS_HOME}/.casher
+
 cache:
   directories:
+    - ./target
+    - target
     - node_modules
+
+stages:
+  - build
+  - test
+
+jobs:
+  include:
+    - stage: build
+      node_js:
+        - "12"
+      install:
+        - echo "target dir content:"
+        - ls -l target
+        - yarn install
+        - yarn build
+        - echo "target dir content:"
+        - ls -l target
+      script: skip
+    - stage: test
+      node_js:
+        - "6"
+        - "8"
+        - "10"
+        - "12"
+        - "13"
+      install:
+        - echo "target dir content:"
+        - ls -l target
+      before_install: skip
+      before_script: skip
+      script:
+        - yarn test

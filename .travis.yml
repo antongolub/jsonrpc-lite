@@ -1,49 +1,54 @@
 language: node_js
 sudo: false
 
-install: skip
-before_install: skip
-before_script: skip
-script: skip
-
-env:
-  - CACHE_NAME=${TRAVIS_OS_NAME}-${CC}-ALL_IN_ONE
-  - CASHER_DIR=${TRAVIS_HOME}/.casher
-
-cache:
-  directories:
-    - ./target
-    - target
-    - node_modules
+node_js:
+  - "6"
+  - "12"
 
 stages:
   - build
   - test
 
+before_install: skip
+install: skip
+
+env:
+  - CACHE_NAME=FOOBAR
+
+cache:
+  directories:
+    - target
+    - node_modules
+
 jobs:
   include:
     - stage: build
+      env:
+        - CACHE_NAME=FOOBAR
       node_js:
         - "12"
+      before_install: skip
       install:
         - echo "target dir content:"
         - ls -l target
         - yarn install
+      before_script: skip
+      script:
         - yarn build
         - echo "target dir content:"
         - ls -l target
-      script: skip
+
     - stage: test
+      env:
+        - CACHE_NAME=FOOBAR
       node_js:
         - "6"
-        - "8"
-        - "10"
         - "12"
-        - "13"
+      before_install: skip
       install:
         - echo "target dir content:"
         - ls -l target
-      before_install: skip
+
       before_script: skip
       script:
         - yarn test

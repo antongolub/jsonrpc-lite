@@ -3,9 +3,10 @@ sudo: false
 
 node_js:
   - "6"
+  - "8"
+  - "10"
   - "12"
-
-before_install: skip
+  - "13"
 
 cache:
   directories:
@@ -13,13 +14,10 @@ cache:
     - node_modules
 
 install:
-  - 'if [ "${TRAVIS_NODE_VERSION}" = "12" ] ; then npm install ; fi ; nvm use "${TRAVIS_NODE_VERSION}";'
+  - 'if [ "${TRAVIS_NODE_VERSION}" = "6" ] ; then nvm use 8 ; fi ;'
+  - yarn install
+  - yarn build
+  - 'if [ "${TRAVIS_NODE_VERSION}" = "6" ] ; then nvm use "${TRAVIS_NODE_VERSION}" ; fi ;'
 
 script:
   - yarn test
-
-matrix:
-  fast_finish: true
-  include:
-    - node_js: "6"
-    - node_js: "12"

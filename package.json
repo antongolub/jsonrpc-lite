@@ -6,14 +6,14 @@
   ],
   "license": "MIT",
   "version": "2.1.0",
-  "source": "target/jsonrpc.ts",
-  "main": "target/jsonrpc.js",
-  "module": "target/jsonrpc.mjs",
-  "unpkg": "target/jsonrpc.umd.js",
-  "browser": "target/jsonrpc.umd.js",
-  "types": "target/jsonrpc.d.ts",
+  "source": "jsonrpc.ts",
+  "main": "jsonrpc.js",
+  "module": "jsonrpc.mjs",
+  "unpkg": "jsonrpc.umd.js",
+  "browser": "jsonrpc.umd.js",
+  "types": "jsonrpc.d.ts",
   "typescript": {
-    "definition": "target/jsonrpc.d.ts"
+    "definition": "jsonrpc.d.ts"
   },
   "repository": {
     "type": "git",
@@ -42,9 +42,8 @@
   },
   "scripts": {
     "build:tsc": "tsc -p tsconfig.build.json",
-    "build:target": "rm -rf ./target && mkdir -p ./target && find . -name \"jsonrpc.*\" -exec cp '{}' ./target/ \\;",
     "build:microbundle": "microbundle build jsonrpc.ts --name jsonrpc --strict",
-    "build": "yarn build:microbundle && yarn build:target",
+    "build": "yarn build:microbundle",
     "lint": "tslint -p tsconfig.json -t stylish jsonrpc.ts",
     "test": "yarn lint && tman"
   },
